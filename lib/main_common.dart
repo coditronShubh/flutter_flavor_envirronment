@@ -1,18 +1,19 @@
 import 'package:cicd_flavor/app_widgets.dart';
+import 'package:cicd_flavor/bloc/config%20cubit/config_cubit_cubit.dart';
 import 'package:cicd_flavor/config_reader.dart';
 import 'package:cicd_flavor/environment.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> mainCommon(String env) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await ConfigReader.initialize();
 
-  // ignore: unused_local_variable
   Color primaryColor;
   switch (env) {
     case Environment.dev:
-      primaryColor = Colors.blue;
+      primaryColor = Colors.green;
       break;
     case Environment.prod:
       primaryColor = Colors.red;
@@ -20,5 +21,8 @@ Future<void> mainCommon(String env) async {
     default:
       primaryColor = Colors.grey;
   }
-  runApp(MyApp(primaryColor: primaryColor));
+  runApp(MultiBlocProvider(
+    providers: [BlocProvider(create: (context) => ConfigCubit())],
+    child: MyApp(primaryColor: primaryColor),
+  ));
 }
