@@ -95,7 +95,7 @@ class HomeScreen extends StatelessWidget {
           } else if (state is ConfigError) {
             return Center(child: Text('Error: ${state.error}'));
           } else {
-            return Center(child: Text('Unknown state'));
+            return const Center(child: Text('Unknown state'));
           }
         },
       ),
